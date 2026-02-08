@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SL Diamond Store | Free Fire Top Up</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#0b0f2b,#000);color:#fff;background-image:url('https://i.imgur.com/B4XG6D2.jpg');background-size:cover;background-position:center;}
+header{background: rgba(13,71,161,0.9);padding: 20px;text-align:center;position: relative;}
+header h1{margin: 0;font-size: 32px;color:#00e5ff;text-shadow: 1px 1px 5px #000;}
+.live{color:red;font-weight:bold;animation:blink 1s infinite;position:absolute;top:20px;right:20px;font-size:16px;}
+@keyframes blink{50%{opacity:0;}}
+.container{max-width:900px;margin:auto;padding:20px;}
+.card{background: rgba(0,0,0,0.8);border-radius:10px;padding:20px;margin-bottom:20px;box-shadow: 0 0 20px rgba(0,0,0,0.7);}
+.card h2{color:#00e5ff;margin-bottom:15px;text-align:center;}
+label{display:block;margin-top:10px;font-size:14px;}
+input,select{width:100%;padding:10px;margin-top:5px;border-radius:5px;border:none;outline:none;}
+.package-btn{background:#ff9800;color:#000;border:none;border-radius:8px;padding:12px;width:100%;font-size:16px;cursor:pointer;margin-top:10px;transition:0.3s;}
+.package-btn:hover{background:#ffc107;}
+.price-box{margin-top:15px;font-size:18px;color:#00ff99;text-align:center;font-weight:bold;}
+footer{text-align:center;padding:15px;background: rgba(0,0,0,0.8);font-size:13px;color:#aaa;}
+.steps p{margin:5px 0;font-size:14px;}
+.badge{background:red;color:#fff;padding:2px 8px;border-radius:5px;font-size:12px;display:inline-block;margin-left:5px;}
+.testimonials{margin-top:20px;}
+.testimonials p{background:rgba(255,255,255,0.1);padding:10px;border-radius:8px;margin-bottom:10px;}
+.faq p{margin:5px 0;}
+.sticky-whatsapp{position:fixed;bottom:10px;right:10px;background:#25d366;padding:15px;border-radius:50%;cursor:pointer;box-shadow:0 0 10px #000;z-index:999;}
+.sticky-whatsapp img{width:40px;height:40px;}
+.orders-counter{font-size:14px;color:#00ff99;text-align:center;margin-bottom:15px;}
+@media(max-width:600px){.card{padding:15px;}}
+/* Popup */
+#codePopup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.95);color:#fff;padding:20px;border-radius:10px;z-index:1000;text-align:center;max-width:90%;}
+#codePopup button{margin-top:10px;padding:10px 20px;border:none;border-radius:5px;background:red;color:#fff;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>SL Diamond Store</h1>
+<span class="live">● LIVE</span>
+</header>
+
+<div class="container">
+
+<!-- Social Proof -->
+<div class="orders-counter" id="ordersCounter">💎 Orders delivered today: 0</div>
+
+<!-- Diamond Top-Up Section -->
+<div class="card">
+<h2>Top Up Diamonds <span class="badge">HOT</span></h2>
+<label>Free Fire UID</label>
+<input type="text" id="uid" placeholder="Enter your Free Fire UID">
+<label>Select Diamond Package</label>
+<select id="package" onchange="updatePrice()">
+<option value="">-- Select --</option>
+<option value="100|350">100 Diamonds – Rs.350</option>
+<option value="310|1000">310 Diamonds – Rs.1000</option>
+<option value="520|1600">520 Diamonds – Rs.1600</option>
+<option value="1060|3000">1060 Diamonds – Rs.3000</option>
+<option value="2180|6000">2180 Diamonds – Rs.6000</option>
+</select>
+<div class="price-box" id="price">Price: Rs.0</div>
+<button class="package-btn" onclick="sendOrder()">💬 Order via WhatsApp</button>
+</div>
+
+<!-- How It Works -->
+<div class="card steps">
+<h2>How It Works</h2>
+<p>1️⃣ Enter your Free Fire UID</p>
+<p>2️⃣ Choose diamond package</p>
+<p>3️⃣ Click "Order via WhatsApp"</p>
+<p>4️⃣ Diamonds delivered in minutes</p>
+<p>⚠️ UID only – No password required</p>
+</div>
+
+<!-- Testimonials -->
+<div class="card testimonials">
+<h2>Testimonials</h2>
+<p>“Got 520 Diamonds in 5 minutes! Highly recommend.” – Gamer123</p>
+<p>“Fast delivery and safe. Thanks SL Diamond Store!” – Player456</p>
+<p>“Best top-up service in Sri Lanka!” – FFFan789</p>
+</div>
+
+<!-- FAQ -->
+<div class="card faq">
+<h2>FAQ</h2>
+<p>Q: Do I need to give my password?</p>
+<p>A: No, only your UID is required.</p>
+<p>Q: How long does delivery take?</p>
+<p>A: Usually within 5 minutes.</p>
+<p>Q: Are the diamonds safe?</p>
+<p>A: Yes, 100% safe delivery.</p>
+</div>
+
+<!-- Free Weekly Code Section -->
+<div class="card">
+<h2>Get Free Weekly Code</h2>
+<p>Click the button below to receive your numeric code. The code changes every 2 hours.</p>
+<button class="package-btn" onclick="sendWeeklyCode()">💬 Send Code to WhatsApp</button>
+<div class="price-box" id="weeklyCodeDisplay"></div>
+</div>
+
+<!-- Popup for expired code -->
+<div id="codePopup">
+  <p id="popupMessage"></p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+</div>
+
+<!-- Sticky WhatsApp Button -->
+<div class="sticky-whatsapp" onclick="openWhatsApp()">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</div>
+
+<footer>© 2026 SL Diamond Store | Not affiliated with Garena</footer>
+
+<script>
+// Orders Counter
+let ordersDelivered = 0;
+
+function updatePrice(){
+    let pkg=document.getElementById("package").value;
+    document.getElementById("price").innerText=pkg?"Price: Rs."+pkg.split("|")[1]:"Price: Rs.0";
+}
+
+// Diamond Order Function
+function sendOrder(){
+    let uid=document.getElementById("uid").value.trim();
+    let pkg=document.getElementById("package").value;
+    if(!uid||!pkg){alert("Please enter UID and select package");return;}
+    let diamonds=pkg.split("|")[0];
+    let price=pkg.split("|")[1];
+
+    let orderID = Math.floor(100000 + Math.random() * 900000); // 6-digit order ID
+    let msg = `UID: ${uid}%0AOrder: ${diamonds} Diamonds%0APrice: Rs.${price}%0AID: ${orderID}`;
+
+    let phone="94757278880"; // Your WhatsApp number
+    window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
+
+    document.getElementById("uid").value="";
+    document.getElementById("package").value="";
+    updatePrice();
+
+    ordersDelivered++;
+    document.getElementById("ordersCounter").innerText=`💎 Orders delivered today: ${ordersDelivered}`;
+}
+
+// Free Weekly Code Function with Expiration
+let lastUsedCode = null;
+
+function getWeeklyCode(){
+    let now = new Date();
+    let hoursUTC = now.getUTCHours();
+    let block = Math.floor(hoursUTC / 2); // 2-hour interval
+    let code = (block * 1234567 % 1000000).toString().padStart(6,'0');
+    return code;
+}
+
+function sendWeeklyCode(){
+    let code = getWeeklyCode();
+
+    if(lastUsedCode === code){
+        let now = new Date();
+        let nextBlockHour = Math.ceil((now.getUTCHours()+1)/2)*2;
+        let nextTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), nextBlockHour,0,0);
+        if(nextTime < now) nextTime.setHours(nextTime.getHours()+2);
+        let diff = nextTime - now;
+        let hours = Math.floor(diff/1000/3600);
+        let minutes = Math.floor((diff/1000/60) % 60);
+        let seconds = Math.floor((diff/1000) % 60);
+
+        showPopup(`The code is expired. Please try again in ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`);
+        return;
+    }
+
+    lastUsedCode = code;
+    document.getElementById("weeklyCodeDisplay").innerText = `Your current code: ${code}`;
+    let phone="94757278880";
+    let msg = `Weekly Free Code: ${code}`;
+    window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
+}
+
+// Popup functions
+function showPopup(message){
+    document.getElementById("popupMessage").innerText = message;
+    document.getElementById("codePopup").style.display = "block";
+}
+function closePopup(){
+    document.getElementById("codePopup").style.display = "none";
+}
+
+// Sticky WhatsApp
+function openWhatsApp(){
+    let phone="94757278880";
+    window.open(`https://wa.me/${phone}`,"_blank");
+}
+</script>
+
+</body>
+</html>
